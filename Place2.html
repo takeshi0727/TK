@@ -35,7 +35,7 @@
             watchID = navigator.geolocation.watchPosition(geoYes, geoNo);
             document.getElementById("watchStr").innerHTML = "GPS正在監控中...";
         }
-        function stopGPS() {
+        function stopGPS() { 
             navigator.geolocation.clearWatch(watchID);
             document.getElementById("watchStr").innerHTML = "GPS停止監控中...";
         }
