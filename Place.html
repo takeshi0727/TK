@@ -22,6 +22,10 @@
         var _icon_url_police = _icon_url + "/police.svg";
         var _icon_url_police2 = _icon_url + "/parking.svg";
 
+        var _addUrl = "@Url.Action("AddMarker")";
+        var _delUrl = "@Url.Action("DelMarker")";
+        var _getUrl = "@Url.Action("GetMarker")";
+
         function initMap() {
             //tryGeolocation();
             if (navigator.geolocation) {
@@ -44,15 +48,15 @@
                 center: { lat: _latitudeLocal, lng: _longitudeLocal }
             });
 
-            ////click event on map
-            //map.addListener('click', function (e) {
-            //    //Determine the location where the user has clicked.
-            //    var location = e.latLng;
-            //    _latitudeClick = location.lat(); //點選地圖之緯度
-            //    _longitudeClick = location.lng(); //點選地圖之經度
+            //click event on map
+            map.addListener('click', function (e) {
+                //Determine the location where the user has clicked.
+                var location = e.latLng;
+                _latitudeClick = location.lat(); //點選地圖之緯度
+                _longitudeClick = location.lng(); //點選地圖之經度
 
-            //    $('#SetMarkerTypeModal').modal("show"); //show dialog，選擇通報類別
-            //});
+                $('#SetMarkerTypeModal').modal("show"); //show dialog，選擇通報類別
+            });
 
             //取得已通報之經緯度
             getResponseMarkers(map);
@@ -72,7 +76,7 @@
         //取得已通報地標
         function getResponseMarkers(_map) {
             delAllMarkersOnMap(); //清空地圖上之所有地標
-
+            alert("XX");
             //於地圖上顯示自身地標
             var markerLocation = new google.maps.Marker({
                 position: { lat: _latitudeLocal, lng: _longitudeLocal },
@@ -81,23 +85,24 @@
                     url: _icon_url_self
                 }
             });
-            ////click marker(自身) event
-            //google.maps.event.addListener(markerLocation, "click", function (e) {
-            //    _latitudeClick = _latitudeLocal; //點選地圖之緯度
-            //    _longitudeClick = _longitudeLocal; //點選地圖之經度
+            //click marker(自身) event
+            google.maps.event.addListener(markerLocation, "click", function (e) {
+                _latitudeClick = _latitudeLocal; //點選地圖之緯度
+                _longitudeClick = _longitudeLocal; //點選地圖之經度
 
-            //    $('#SetMarkerTypeModal').modal("show"); //show dialog，選擇通報類別
-            //});
+                $('#SetMarkerTypeModal').modal("show"); //show dialog，選擇通報類別
+            });
 
-            ////由後端取得json格式之已通報地標
-            //$.post(_getUrl, null, function (result) {
-            //    var _data = result.data;
-            //    //alert("cnt:" + _data.length.toString() + ";" + _data[0]["Latitude"]);
-            //    for (var i = 0; i < _data.length; i++) {
-            //        //於地圖上顯示已通報地標
-            //        addMarkerOnMap(_map, _data[i]["PlaceType"], parseFloat(_data[i]["Latitude"]), parseFloat(_data[i]["Longitude"]));
-            //    }
-            //});
+            //由後端取得json格式之已通報地標
+            $.post(_getUrl, null, function (result) {
+                var _data = result.data;
+                console.log("cnt:" + _data.length.toString() + ";" + _data[0]["Latitude"]);
+                //alert("cnt:" + _data.length.toString() + ";" + _data[0]["Latitude"]);
+                //for (var i = 0; i < _data.length; i++) {
+                //    //於地圖上顯示已通報地標
+                //    addMarkerOnMap(_map, _data[i]["PlaceType"], parseFloat(_data[i]["Latitude"]), parseFloat(_data[i]["Longitude"]));
+                //}
+            });
 
             //輪詢取得最新之已通報地標
             var t = setTimeout(function () {
