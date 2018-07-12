@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @RenderSection("myStyle", required: false)
+</head>
+<body>
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/modernizr", "~/bundles/jquery")
+    @RenderSection("myScripts", required: false)
+</body>
+</html>

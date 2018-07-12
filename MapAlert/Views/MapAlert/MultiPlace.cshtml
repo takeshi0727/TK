@@ -1,0 +1,62 @@
+﻿
+@section myStyle{
+    @Styles.Render("~/Content/themes/base/jqueryUI", "~/Content/themes/base/css")
+}
+@section myScripts{
+    @Scripts.Render("~/bundles/modernizr", "~/bundles/jqueryui", "~/bundles/bootstrap")
+    <script type="text/javascript" src="~/Scripts/MultiPlace.js?ver=@Guid.NewGuid().ToString()"></script>
+    <script>
+        var _addUrl = "@Url.Action("AddMarker")";
+        var _delUrl = "@Url.Action("DelMarker")";
+        var _getUrl = "@Url.Action("GetMarker")";
+    </script>
+    
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?callback=initMap">
+    </script>
+}
+
+
+<div class="col-xs-12" id="map" style="width: 1024px; height: 768px;"></div>
+    
+<div class="modal fade" id="SetMarkerTypeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="modal-header">
+                        <h3>請選擇</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            @Html.RadioButton("MarkerType", "1", new { onclick = "SetTypeOptions($(this).val());" })警示路段
+                            @Html.RadioButton("MarkerType", "2", new { onclick = "SetTypeOptions($(this).val());" })警察攔查
+                            @Html.RadioButton("MarkerType", "3", new { onclick = "SetTypeOptions($(this).val());" })雷射測速
+                            @Html.RadioButton("MarkerType", "4", new { onclick = "SetTypeOptions($(this).val());" })黑箱測速
+                            @Html.RadioButton("MarkerType", "5", new { onclick = "SetTypeOptions($(this).val());" })聯合稽查
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                        <button type="button" class="btn btn-primary" id="btnModalSave">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <audio id="CameraAudio">
+        <source src="../Sounds/Camera.wav" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="BalarmAudio">
+        <source src="../Sounds/balarm.wav" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="BbAudio">
+        <source src="../Sounds/bb.wav" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    @Html.Hidden("HidPlaceType")
+</div>

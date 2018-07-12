@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    
+</head>
+<body>
+    <div id="map" style="width: 1024px; height: 768px;"></div>
+    
+    <script>
+        var _arrMarkers = [];
+        var _arrCircles = [];
+        var _uniqueID = 1;
+        var _latitudeLocal = "";
+        var _longitudeLocal = "";
+
+        function initMap() {
+            if (navigator.geolocation) {
+                //支援GPS地理位置
+                navigator.geolocation.getCurrentPosition(getSucess, getFail);
+            } else {
+                //不支援GPS地理位置
+                alert("目前GPS無法定位！！");
+            }
+        }
+
+        function getSucess(evt) {
+            _latitudeLocal = evt.coords.latitude;
+            _longitudeLocal = evt.coords.longitude;
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                //center: { lat: 25.0722053, lng: 121.5770333 }
+                center: { lat: _latitudeLocal, lng: _longitudeLocal }
+            });
+
+            map.addListener('click', function (e) {
+                //Determine the location where the user has clicked.
+                var location = e.latLng;
+
+                //Create a marker、circle and placed it on the map.
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+                var circle = new google.maps.Circle({
+                    center: location,
+                    radius: 500,
+                    strokeOpacity: 0,
+                    fillColor: '#f00',
+                    fillOpacity: 0.35,
+                    map: map
+                });
+
+                //Set unique id
+                marker.id = _uniqueID;
+                _uniqueID++;
+
+                //Attach click event handler to the marker.
+                google.maps.event.addListener(marker, "click", function (e) {
+                    var content = "";
+                    content += 'Latitude: ' + location.lat() + '<br />Longitude: ' + location.lng();
+                    content += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker(" + marker.id + ");' value = 'Delete' />";
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: content
+                    });
+                    infoWindow.open(map, marker);
+                });
+
+                //Add marker to the array.
+                _arrMarkers.push(marker);
+                _arrCircles.push(circle);
+
+                //Check into circle for Self
+                if (circle.getBounds().contains({ lat: _latitudeLocal, lng: _longitudeLocal })) {
+                    alert("police");
+                }
+            });
+        }
+
+        function getFail(evt) {
+            alert("GPS取得失敗");
+        }
+
+        function DeleteMarker(id) {
+            //Find and remove the marker from the Array
+            for (var i = 0; i < _arrMarkers.length; i++) {
+                if (_arrMarkers[i].id == id) {
+                    //Remove the marker from Map
+                    _arrMarkers[i].setMap(null);
+                    _arrCircles[i].setMap(null);
+                    //Remove the marker from array
+                    _arrMarkers.splice(i, 1);
+                    _arrCircles.splice(i, 1);
+                    return;
+                }
+            }
+        }
+        
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?callback=initMap">
+    </script>
+
+</body>
+</html>
