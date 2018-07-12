@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>@ViewBag.Title</title>
 
@@ -78,7 +78,7 @@
         //取得已通報地標
         function getResponseMarkers(_map) {
             delAllMarkersOnMap(); //清空地圖上之所有地標
-            alert("XX");
+            //alert("XX");
             //於地圖上顯示自身地標
             var markerLocation = new google.maps.Marker({
                 position: { lat: _latitudeLocal, lng: _longitudeLocal },
