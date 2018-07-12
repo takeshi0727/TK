@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <script type="text/javascript" src="http://code.google.com/apis/gears/gears_init.js"></script>   
 
     <script type="text/javascript">
         var _arrMarkers = []; //於地圖上之地標
@@ -55,6 +54,10 @@
             //});
         }
 
+        //取得GPS失敗
+        function getFail(evt) {
+            alert("GPS取得失敗");
+        }
 
 
         //if (navigator.geolocation) {
