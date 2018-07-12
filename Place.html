@@ -94,16 +94,18 @@
                 $('#SetMarkerTypeModal').modal("show"); //show dialog，選擇通報類別
             });
 
-            //由後端取得json格式之已通報地標
-            $.post(_getUrl, null, function (result) {
-                var _data = result.data;
-                console.log("cnt:" + _data.length.toString() + ";" + _data[0]["Latitude"]);
-                //alert("cnt:" + _data.length.toString() + ";" + _data[0]["Latitude"]);
-                //for (var i = 0; i < _data.length; i++) {
-                //    //於地圖上顯示已通報地標
-                //    addMarkerOnMap(_map, _data[i]["PlaceType"], parseFloat(_data[i]["Latitude"]), parseFloat(_data[i]["Longitude"]));
-                //}
+            $.postJSON(_getUrl,{},function(result){
+                console.log(result.length);
             });
+            ////由後端取得json格式之已通報地標
+            //$.post(_getUrl, null, function (result) {
+            //    var _data = result.data;
+            //    //alert("cnt:" + _data.length.toString() + ";" + _data[0]["Latitude"]);
+            //    for (var i = 0; i < _data.length; i++) {
+            //        //於地圖上顯示已通報地標
+            //        addMarkerOnMap(_map, _data[i]["PlaceType"], parseFloat(_data[i]["Latitude"]), parseFloat(_data[i]["Longitude"]));
+            //    }
+            //});
 
             //輪詢取得最新之已通報地標
             var t = setTimeout(function () {
