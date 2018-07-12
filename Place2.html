@@ -21,10 +21,10 @@
             str += "<br />經度" + evt.coords.longitude;
             str += "<br />精確度" + evt.coords.accuracy;
             // str += 等於=> str = str+....
-            //document.getElementById("posStr").innerHTML = str;
+            document.getElementById("posStr").innerHTML = str;
 
-            //str = "http://maps.googleapis.com/maps/api/staticmap?zoom=15&size=300x300&sensor=false&center=" + evt.coords.latitude + "," + evt.coords.longitude + "&markers=color:red%7C" + evt.coords.latitude + "," + evt.coords.longitude;
-            //document.getElementById("map").src = str;
+            str = "http://maps.googleapis.com/maps/api/staticmap?zoom=15&size=300x300&sensor=false&center=" + evt.coords.latitude + "," + evt.coords.longitude + "&markers=color:red%7C" + evt.coords.latitude + "," + evt.coords.longitude;
+            document.getElementById("map").src = str;
         }
         function geoNo(evt) {
             console.log(evt);
