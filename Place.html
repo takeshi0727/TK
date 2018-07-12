@@ -4,45 +4,101 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <script type="text/javascript" src="http://code.google.com/apis/gears/gears_init.js"></script>   
 
     <script type="text/javascript">
-        if (navigator.geolocation) {
-            //支援GPS地理位置
-            navigator.geolocation.getCurrentPosition(geoYes, geoNo);
-        } else {
-            //不支援GPS地理位置
-            alert("目前GPS無法定位！！");
+        var _arrMarkers = []; //於地圖上之地標
+        var _arrCircles = []; //於地圖上之區域
+        var _uniqueID = 1; //for markerId
+        var _latitudeLocal = ""; //目前GPS定位之緯度
+        var _longitudeLocal = ""; //目前GPS定位之經度
+
+        function initMap() {
+            //tryGeolocation();
+            if (navigator.geolocation) {
+                //支援GPS地理位置
+                navigator.geolocation.getCurrentPosition(getSucess, getFail);
+            } else {
+                //不支援GPS地理位置
+                alert("目前GPS無法定位！！");
+            }
         }
 
-        function geoYes(evt) {
-            console.log(evt);
-            str = "緯度" + evt.coords.latitude;
-            str += "<br />經度" + evt.coords.longitude;
-            str += "<br />精確度" + evt.coords.accuracy;
-            // str += 等於=> str = str+....
-            document.getElementById("posStr").innerHTML = str;
+        function getSucess(evt) {
+            _latitudeLocal = evt.coords.latitude; //目前GPS定位之緯度
+            _longitudeLocal = evt.coords.longitude; //目前GPS定位之經度
 
-            str = "http://maps.googleapis.com/maps/api/staticmap?zoom=15&size=300x300&sensor=false&center=" + evt.coords.latitude + "," + evt.coords.longitude + "&markers=color:red%7C" + evt.coords.latitude + "," + evt.coords.longitude;
-            document.getElementById("map").src = str;
-        }
-        function geoNo(evt) {
-            console.log(evt);
-            alert("GPS取得失敗");
+            var map = new google.maps.Map(document.getElementById('map'), {
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                zoom: 14,
+                //center: { lat: 25.0722053, lng: 121.5770333 }
+                center: { lat: _latitudeLocal, lng: _longitudeLocal }
+            });
+
+            ////click event on map
+            //map.addListener('click', function (e) {
+            //    //Determine the location where the user has clicked.
+            //    var location = e.latLng;
+            //    _latitudeClick = location.lat(); //點選地圖之緯度
+            //    _longitudeClick = location.lng(); //點選地圖之經度
+
+            //    $('#SetMarkerTypeModal').modal("show"); //show dialog，選擇通報類別
+            //});
+
+            ////取得已通報之經緯度
+            //getResponseMarkers(map);
+
+            ////click button(確認) event on dialog
+            //$('#btnModalSave').click(function () {
+            //    //alert(_latitudeClick + ";" + _longitudeClick);
+            //    saveClickMarker(map, _latitudeClick, _longitudeClick);
+            //});
         }
 
-        var watchID;
-        function startGPS() {
-            watchID = navigator.geolocation.watchPosition(geoYes, geoNo);
-            document.getElementById("watchStr").innerHTML = "GPS正在監控中...";
-        }
-        function stopGPS() {
-            navigator.geolocation.clearWatch(watchID);
-            document.getElementById("watchStr").innerHTML = "GPS停止監控中...";
-        }
+
+
+        //if (navigator.geolocation) {
+        //    //支援GPS地理位置
+        //    navigator.geolocation.getCurrentPosition(geoYes, geoNo);
+        //} else {
+        //    //不支援GPS地理位置
+        //    alert("目前GPS無法定位！！");
+        //}
+
+        //function geoYes(evt) {
+        //    console.log(evt);
+        //    str = "緯度" + evt.coords.latitude;
+        //    str += "<br />經度" + evt.coords.longitude;
+        //    str += "<br />精確度" + evt.coords.accuracy;
+        //    // str += 等於=> str = str+....
+        //    document.getElementById("posStr").innerHTML = str;
+
+        //    str = "http://maps.googleapis.com/maps/api/staticmap?zoom=15&size=300x300&sensor=false&center=" + evt.coords.latitude + "," + evt.coords.longitude + "&markers=color:red%7C" + evt.coords.latitude + "," + evt.coords.longitude;
+        //    document.getElementById("map").src = str;
+        //}
+        //function geoNo(evt) {
+        //    console.log(evt);
+        //    alert("GPS取得失敗");
+        //}
+
+        //var watchID;
+        //function startGPS() {
+        //    watchID = navigator.geolocation.watchPosition(geoYes, geoNo);
+        //    document.getElementById("watchStr").innerHTML = "GPS正在監控中...";
+        //}
+        //function stopGPS() {
+        //    navigator.geolocation.clearWatch(watchID);
+        //    document.getElementById("watchStr").innerHTML = "GPS停止監控中...";
+        //}
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?&callback=initMap">
     </script>
 </head>
 <body>
-    <h1>定位資訊 </h1>
+    <div class="col-xs-12" id="map" style="width: 1024px; height: 768px;"></div>
+
+    <!--<h1>定位資訊 </h1>
     <p id="posStr">111222</p>
     <p id="watchStr">監控狀態</p>
     <p>
@@ -51,6 +107,6 @@
 
     </p>
     <p>當啟動GPS更新,不用聯網也可持續更新!!!<br>只要網頁開著!</p><hr>
-    <p><img id="map"/></p>
+    <p><img id="map"/></p>-->
 </body>
 </html>
