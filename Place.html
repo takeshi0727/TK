@@ -94,7 +94,7 @@
                 $('#SetMarkerTypeModal').modal("show"); //show dialog，選擇通報類別
             });
 
-            $.postJSON(_getUrl,{},function(result){
+            $.post(_getUrl,{},function(result){
                 console.log(result.length);
             });
             ////由後端取得json格式之已通報地標
