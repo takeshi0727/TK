@@ -22,8 +22,8 @@
             str = "緯度" + evt.coords.latitude;
             str += "<br />經度" + evt.coords.longitude;
             str += "<br />精確度" + evt.coords.accuracy;
-            _latitudeLocal = evt.coords.longitude;
-            _longitudeLocal = evt.coords.accuracy;
+            _latitudeLocal = evt.coords.latitude;
+            _longitudeLocal = evt.coords.longitude;
             // str += 等於=> str = str+....
             document.getElementById("posStr").innerHTML = str;
 
@@ -46,7 +46,7 @@
         }
         
         function goSomee(){
-            var _url = 'http://takeshi0727.somee.com/MapAlert/MapAlert/MultiPlace2?Latitude='+_latitudeLocal+'&Longitude='+_longitudeLocal;
+            var _url = 'http://takeshi0727.somee.com/MapAlert2/MapAlert/MultiPlace2?Latitude='+_latitudeLocal+'&Longitude='+_longitudeLocal;
             location.href=_url;
         }
     </script>
