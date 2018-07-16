@@ -17,6 +17,7 @@ var _icon_url_police = _icon_url + "/police.svg";
 var _icon_url_police2 = _icon_url + "/parking.svg";
 
 $(function () {
+    initMap();
 });
 
 function initMap() {
@@ -34,31 +35,7 @@ function getSucess(evt) {
     _latitudeLocal = evt.coords.latitude; //目前GPS定位之緯度
     _longitudeLocal = evt.coords.longitude; //目前GPS定位之經度
 
-    var map = new google.maps.Map(document.getElementById('map'), {
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        zoom: 14,
-        //center: { lat: 25.0722053, lng: 121.5770333 }
-        center: { lat: _latitudeLocal, lng: _longitudeLocal }
-    });
-    
-    //click event on map
-    map.addListener('click', function (e) {
-        //Determine the location where the user has clicked.
-        var location = e.latLng;
-        _latitudeClick = location.lat(); //點選地圖之緯度
-        _longitudeClick = location.lng(); //點選地圖之經度
-        
-        $('#SetMarkerTypeModal').modal("show"); //show dialog，選擇通報類別
-    });
-    
-    //取得已通報之經緯度
-    getResponseMarkers(map);
-    
-    //click button(確認) event on dialog
-    $('#btnModalSave').click(function () {
-        //alert(_latitudeClick + ";" + _longitudeClick);
-        saveClickMarker(map, _latitudeClick, _longitudeClick);
-    });
+    console.log("_latitudeLocal:"+_latitudeLocal+";_longitudeLocal:"+_longitudeLocal);
 }
 
 //取得已通報地標
