@@ -49,6 +49,12 @@
             var _url = 'http://takeshi0727.somee.com/MapAlert2/MapAlert/MultiPlace2?Latitude='+_latitudeLocal+'&Longitude='+_longitudeLocal;
             location.href=_url;
         }
+        
+        //輪詢取得最新之已通報地標
+        var t = setTimeout(function () {
+            var _url = 'http://takeshi0727.somee.com/MapAlert2/MapAlert/MultiPlace2?Latitude='+_latitudeLocal+'&Longitude='+_longitudeLocal;
+            location.href=_url;
+        }, 10000);
     </script>
 </head>
 <body>
