@@ -27,8 +27,8 @@
             // str += 等於=> str = str+....
             document.getElementById("posStr").innerHTML = str;
 
-            str = "http://maps.googleapis.com/maps/api/staticmap?zoom=15&size=300x300&sensor=false&center=" + evt.coords.latitude + "," + evt.coords.longitude + "&markers=color:red%7C" + evt.coords.latitude + "," + evt.coords.longitude;
-            document.getElementById("map").src = str;
+            //str = "http://maps.googleapis.com/maps/api/staticmap?zoom=15&size=300x300&sensor=false&center=" + evt.coords.latitude + "," + evt.coords.longitude + "&markers=color:red%7C" + evt.coords.latitude + "," + evt.coords.longitude;
+            //document.getElementById("map").src = str;
         }
         function geoNo(evt) {
             console.log(evt);
@@ -62,12 +62,12 @@
     <p id="posStr">111222</p>
     <p id="watchStr">監控狀態</p>
     <p>
-        <input type="button" value="啟動GPS更新" onClick="startGPS();">
-        <input type="button" value="停止GPS更新" onClick="stopGPS();">
+        <!-- <input type="button" value="啟動GPS更新" onClick="startGPS();">
+        <input type="button" value="停止GPS更新" onClick="stopGPS();"> -->
         <input type="button" value="go" onClick="goSomee();">
 
     </p>
-    <p>當啟動GPS更新,不用聯網也可持續更新!!!<br>只要網頁開著!</p><hr>
-    <p><img id="map"/></p>
+    <!-- <p>當啟動GPS更新,不用聯網也可持續更新!!!<br>只要網頁開著!</p><hr> -->
+    <!-- <p><img id="map"/></p> -->
 </body>
 </html>
